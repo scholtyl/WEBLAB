@@ -1,0 +1,20 @@
+{
+  "name": "js-concepts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "lint": "eslint .",
+    "prettier": "prettier --write ."
+  },
+  "author": "Web Programming Lab 🚀",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "node-fetch": "^3.3.2",
+    "prettier": "^3.2.5"
+  }
+}
