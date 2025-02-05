@@ -1,0 +1,5 @@
+@if (selectedUser !== undefined) {
+<login-component [(selectedUser)]="selectedUser"></login-component>
+} @else {
+<user-list-component [(selectedUser)]="selectedUser"></user-list-component>
+}

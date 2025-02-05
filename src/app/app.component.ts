@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MessagesComponent } from './messages/messages.component';
-import {RouterLink, RouterOutlet} from '@angular/router';
+import { RouterOutlet} from '@angular/router';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MessagesComponent, RouterLink],
+  imports: [RouterOutlet, MessagesComponent, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

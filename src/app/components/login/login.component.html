@@ -1,0 +1,51 @@
+<div class="flex justify-center mt-10">
+  <div>
+    <p (click)="back()" class="text-lg">&lt; Back</p>
+    <div
+      class="flex-col flex-wrap content-center w-64 p-3 card gap-2 text-xl card-compact bg-secondary shadow-xl"
+    >
+      <i class="bx bx-lock text-center text-6xl"></i>
+      <div class="flex justify-center">
+        <p>PIN for {{ selectedUser }}:</p>
+      </div>
+      <div>
+        <label class="text-2xl input input-bordered flex items-center gap-2">
+          <i class="bx bx-key text-center text-2xl"></i>
+          <input
+            type="password"
+            inputmode="numeric"
+            class="w-10"
+            value="{{ pin }}"
+          />
+        </label>
+      </div>
+      <div>
+        <div>
+          <div class="my-1 flex w-full justify-center gap-1">
+            <kbd class="kbd text-3xl" (click)="click(1)">1</kbd>
+            <kbd class="kbd text-3xl" (click)="click(2)">2</kbd>
+            <kbd class="kbd text-3xl" (click)="click(3)">3</kbd>
+          </div>
+          <div class="my-1 flex w-full justify-center gap-1">
+            <kbd class="kbd text-3xl" (click)="click(4)">4</kbd>
+            <kbd class="kbd text-3xl" (click)="click(5)">5</kbd>
+            <kbd class="kbd text-3xl" (click)="click(6)">6</kbd>
+          </div>
+          <div class="my-1 flex w-full justify-center gap-1">
+            <kbd class="kbd text-3xl" (click)="click(7)">7</kbd>
+            <kbd class="kbd text-3xl" (click)="click(8)">8</kbd>
+            <kbd class="kbd text-3xl" (click)="click(9)">9</kbd>
+          </div>
+          <div class="my-1 flex w-full justify-end gap-1">
+            <kbd class="kbd text-3xl" (click)="click(0)">0</kbd>
+            <kbd
+              (click)="del()"
+              class="kbd kbd-md bg-error-content text-red-700 border-red-600 border text-3xl"
+              >Del</kbd
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
