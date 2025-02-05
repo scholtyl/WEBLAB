@@ -1,48 +1,59 @@
-# JavaScript Sprachkonzepte
+# GymTracker
 
-Mit diesem Projekt können Sie die Code- sowie die Übungsbeispiele aus dem Input JavaScript Sprachkonzepte lokal ausführen.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.5.
 
-Die Ausführungsumgebung ist [Node.js](https://nodejs.org/).
+## Development server
 
-## Vorbereitung
+To start a local development server, run:
 
-- [Installation](https://code.visualstudio.com/download) Visual Studio Code
-  - Optional: Prettier VS Code extension installieren
-- Installation [Node.js](https://nodejs.org/) latest LTS Version
-  - Tipp: Nutzen Sie den Node Version Manager (nvm)
-    - [nvm](https://github.com/nvm-sh/nvm)
-    - [nvm-windows](https://github.com/coreybutler/nvm-windows)
-    - `nvm install` installiert die angegebene Node.js Version vom `.nvmrc`
-- `node --version` sollte die installierte Version anzeigen (18)
-- Git Repository clonen
-- Abhängigkeiten installieren
-  - `npm ci`
-- `index.js` ausführen
-  - `npm run start` oder `node index.js`
-- Auf der Konsole sollte anschliessend erscheinen: `Hello Web Programming Lab 🤙`
+```bash
+ng serve
+```
 
-## Struktur
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-Dieses Repository ist wie folgt strukturiert:
+## Code scaffolding
 
-- `./snippets`: Enthält alle im Unterricht besprochenen Code-Snippets
-- `./exercises`: Enthält alle zu lösenden Übungen, ggf. mit entsprechenden Tests
-- `./index.js`: Ihr Playground, um eigene Code-Fragemente ausführen zu können
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-## Ausführen
+```bash
+ng generate component component-name
+```
 
-- Snippets oder Übungen: `node ./[snippets | exercises]/[file].js`
-- Playground index.js: `node ./index.js`
-- Oder im Visual Studio Code in der "Run and Debug" Sicht: "Launch Program"
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-## Tooling in diesem Projekt
+```bash
+ng generate --help
+```
 
-- [Prettier](https://prettier.io/)
-  - Formatierung
-- [ESLint](https://eslint.org/)
-  - JavaScript Linter um potentielle Bugs zu markieren
+## Building
 
-## FAQ
+To build the project run:
 
-- Wie debugge ich JavaScript (Node.js) in VS Code?
-  - [Node.js Debugging in VS Code](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
