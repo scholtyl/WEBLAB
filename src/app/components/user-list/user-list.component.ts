@@ -14,6 +14,5 @@ export class UserListComponent {
   {
     this.selectedUser = name;
     this.selectedUserChange.emit(name)
-    console.log(this.selectedUser);
   }
 }
