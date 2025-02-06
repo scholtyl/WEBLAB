@@ -4,46 +4,53 @@
     <div
       class="flex-col flex-wrap content-center w-64 p-3 card gap-2 text-xl bg-secondary shadow-xl"
     >
-      <i class="bx bx-lock text-center text-6xl"></i>
+      <i class="bx bx-lock text-center text-6xl" [ngClass]="{'text-red-500 bx-tada': loginFailed}" [ngStyle]="loginFailed ? {'animation-iteration-count': '1'} : {}"></i>
       <div class="flex justify-center">
         <p>PIN for {{ selectedUser }}:</p>
       </div>
       <div>
+        @if(loginFailed)
+        {
+          <div class="label p-0">
+            <span class="label-text-alt text-error mb-1 ml-1">Wrong PIN!</span>
+          </div>
+        }
         <label class="text-2xl input input-bordered flex items-center gap-2">
           <i class="bx bx-key text-center text-2xl"></i>
-          <input 
+          <input
             type="password"
             class="w-32"
             inputmode="numeric"
-            value="{{ pin }}"
+            [(ngModel)]="pin"
+            (input)="onPinChange()"
           />
         </label>
       </div>
-        <div>
-          <div class="my-1 flex justify-center gap-1">
-            <kbd class="kbd text-3xl" (click)="click(1)">1</kbd>
-            <kbd class="kbd text-3xl" (click)="click(2)">2</kbd>
-            <kbd class="kbd text-3xl" (click)="click(3)">3</kbd>
-          </div>
-          <div class="my-1 flex justify-center gap-1">
-            <kbd class="kbd text-3xl" (click)="click(4)">4</kbd>
-            <kbd class="kbd text-3xl" (click)="click(5)">5</kbd>
-            <kbd class="kbd text-3xl" (click)="click(6)">6</kbd>
-          </div>
-          <div class="my-1 flex justify-center gap-1">
-            <kbd class="kbd text-3xl" (click)="click(7)">7</kbd>
-            <kbd class="kbd text-3xl" (click)="click(8)">8</kbd>
-            <kbd class="kbd text-3xl" (click)="click(9)">9</kbd>
-          </div>
-          <div class="my-1 flex justify-end gap-1">
-              <kbd class="kbd text-3xl" (click)="click(0)">0</kbd>
-              <kbd
-              (click)="del()"
-              class="kbd kbd-md bg-error-content text-red-700 border-red-600 border text-3xl"
-              >Del</kbd
-              >
-            </div>
+      <div>
+        <div class="my-1 flex justify-center gap-1">
+          <kbd class="kbd text-3xl" (click)="click(1)">1</kbd>
+          <kbd class="kbd text-3xl" (click)="click(2)">2</kbd>
+          <kbd class="kbd text-3xl" (click)="click(3)">3</kbd>
         </div>
+        <div class="my-1 flex justify-center gap-1">
+          <kbd class="kbd text-3xl" (click)="click(4)">4</kbd>
+          <kbd class="kbd text-3xl" (click)="click(5)">5</kbd>
+          <kbd class="kbd text-3xl" (click)="click(6)">6</kbd>
+        </div>
+        <div class="my-1 flex justify-center gap-1">
+          <kbd class="kbd text-3xl" (click)="click(7)">7</kbd>
+          <kbd class="kbd text-3xl" (click)="click(8)">8</kbd>
+          <kbd class="kbd text-3xl" (click)="click(9)">9</kbd>
+        </div>
+        <div class="my-1 flex justify-end gap-1">
+          <kbd class="kbd text-3xl" (click)="click(0)">0</kbd>
+          <kbd
+            (click)="del()"
+            class="kbd kbd-md bg-error-content text-red-700 border-red-600 border text-3xl"
+            >Del</kbd
+          >
+        </div>
+      </div>
     </div>
   </div>
 </div>

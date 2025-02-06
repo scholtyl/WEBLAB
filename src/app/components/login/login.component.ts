@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'login-component',
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -10,17 +12,31 @@ export class LoginComponent {
   @Input() selectedUser?: string;
   @Output() selectedUserChange = new EventEmitter<string>();
 
-  pin?: number;
+  pin: string = '';
+  loginFailed: boolean = false;
+
+  onPinChange(): void {
+    if (this.pin && this.pin.length >= 4) {
+      this.login();
+    }
+  }
+
+  login(): void {
+    console.log('Logging in with PIN:', this.pin);
+    this.loginFailed = !this.loginFailed;
+    this.pin = "";
+  }
 
   click(number: number) {
-    this.pin = Number(`${this.pin ?? ''}${number}`);
+    this.pin += number;
+    this.onPinChange();
   }
 
   del() {
     if (this.pin !== undefined) {
-      const pinStr = this.pin.toString().slice(0, -1);
-      this.pin = pinStr.length > 0 ? Number(pinStr) : undefined;
+      this.pin = this.pin.slice(0, -1);
     }
+    this.onPinChange();
   }
 
   back() {
