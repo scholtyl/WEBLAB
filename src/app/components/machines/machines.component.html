@@ -1,27 +1,19 @@
 <div class="flex justify-center flex-wrap flex-col content-center mt-4 gap-5">
+  @for (machine of getMachines(); track $index) {
+
   <div
-    (click)="selectMachine(1)"
+    (click)="selectMachine(machine.id)"
     class="card card-side bg-secondary w-96 shadow-xl"
   >
     <figure class="w-1/3">
-      <img src="./../../media/Machine1.jpg" />
+      <img src="./../../media/Machine{{ machine.id }}.jpg" />
     </figure>
     <div class="p-3 mx-auto flex justify-center flex-col items-center">
-      <h2 class="card-title text-base-content">Bauchpresse<i class="bx bx-calendar-x text-info text-md"></i></h2>
-      <p class="text-base-content">Last Weight: 30Kg</p>
+      <h2 class="card-title text-base-content">
+        {{machine.name}}<i class="bx bx-calendar-x text-info text-md"></i>
+      </h2>
+      <p class="text-base-content">Last Weight: {{ machine.weight }}Kg</p>
     </div>
   </div>
-
-  <div
-    (click)="selectMachine(2)"
-    class="brightness-75 card card-bordered border-success border-2 card-side bg-secondary w-96 shadow-xl"
-  >
-    <figure class="w-1/3">
-      <img src="./../../media/Machine1.jpg" />
-    </figure>
-    <div class="p-3 mx-auto flex justify-center flex-col items-center">
-      <h2 class="card-title text-base-content">Beinpresse<i class="bx bx-dumbbell text-success text-md"></i></h2>
-      <p class="text-base-content">Last Weight: 50kg</p>
-    </div>
-  </div>
+  }
 </div>
