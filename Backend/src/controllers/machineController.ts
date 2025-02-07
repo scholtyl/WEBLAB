@@ -5,6 +5,8 @@ import { Machine } from "../DTOs/Machine";
 const router = Router();
 
 router.get("/machines", (req: Request, res: Response) => {
+  console.log("Machines requested.");
+
   let m1 = new Machine(1, "Bauchpresse", new Date("1241-08-01"), 30);
   let m2 = new Machine(2, "Beinpresse", new Date("1241-08-01"), 50);
   let m3 = new Machine(3, "Brustpresse", new Date("1241-08-01"), 35);

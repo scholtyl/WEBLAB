@@ -3,12 +3,19 @@ import dotenv from "dotenv";
 import userController from "./controllers/userController";
 import machineController from "./controllers/machineController";
 import { authMiddleware } from "./middlewares/jwtMiddleware";
+import cors from 'cors';
 
 dotenv.config(); // Load environment variables
 
 const app = express();
 
 const PORT = process.env.PORT || 8000;
+
+app.use(cors({
+    origin: 'http://localhost:4200', // Allow requests only from this origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow only these HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+  }));
 
 app.use(express.json());
 

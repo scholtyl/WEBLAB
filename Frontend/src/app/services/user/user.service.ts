@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../models/user';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,10 +9,11 @@ import { User } from '../../models/user';
 
 export class UserService {
 
-  getUsers() : User[]
-  {
-    return [ { id: "asd", name: "Laurin", lastTraining: new Date("2001-03-19")}, {id: "asd", name: "Gast", lastTraining: new Date("1241-08-01")}]
-  }
+  constructor(private http: HttpClient){}
+  
+  private apiUrl = 'http://localhost:8000/api/user/user';
 
-  constructor() { }
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl);
+  }
 }

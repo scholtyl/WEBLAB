@@ -1,6 +1,6 @@
 <div class="flex justify-center flex-wrap flex-col content-center mt-4 gap-5">
   
-  @for (user of getUserList(); track $index) {
+  @for (user of users; track $index) {
 
     <div (click)="selectUser(user.name!)" class="card card-side cursor-pointer bg-secondary w-96 shadow-xl">
       <div class="flex items-center">
