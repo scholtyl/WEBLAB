@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -21,7 +22,14 @@ export class AuthService {
   }
 
   login(username: string, pin: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { username, pin });
+    return this.http.post<any>(this.apiUrl, { username, pin }).pipe(
+      tap((response) => {
+        if (response.token) {
+          localStorage.setItem(this.tokenKey, response.token);  // ✅ Store token in localStorage
+          this.setCurrentUser(response.token);  // ✅ Set current user state
+        }
+      })
+    );
   }
 
   logout(): void {

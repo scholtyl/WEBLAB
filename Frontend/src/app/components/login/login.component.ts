@@ -30,8 +30,7 @@ export class LoginComponent {
       (response) => {
         this.loginFailed = false;
         // Store token and set current user data based on decoded token
-        this.authService.setCurrentUser(response.token);
-        this.back()
+        this.router.navigate(["/machines"]);
       },
       (error) => {
         this.loginFailed = true;
