@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-component',
@@ -12,6 +14,8 @@ export class LoginComponent {
   @Input() selectedUser?: string;
   @Output() selectedUserChange = new EventEmitter<string>();
 
+  constructor(private authService: AuthService, private router: Router) {}
+
   pin: string = '';
   loginFailed: boolean = false;
 
@@ -22,9 +26,18 @@ export class LoginComponent {
   }
 
   login(): void {
-    console.log('Logging in with PIN:', this.pin);
-    this.loginFailed = !this.loginFailed;
-    this.pin = "";
+    this.authService.login(this.selectedUser!, this.pin).subscribe(
+      (response) => {
+        this.loginFailed = false;
+        // Store token and set current user data based on decoded token
+        this.authService.setCurrentUser(response.token);
+        this.back()
+      },
+      (error) => {
+        this.loginFailed = true;
+        this.pin = '';
+      },
+    );
   }
 
   click(number: number) {
@@ -41,6 +54,6 @@ export class LoginComponent {
 
   back() {
     this.selectedUser = undefined;
-    this.selectedUserChange.emit(this.selectedUser)
+    this.selectedUserChange.emit(this.selectedUser);
   }
 }

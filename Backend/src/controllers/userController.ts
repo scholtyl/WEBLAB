@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 const router = Router();
 const SECRET_KEY = "shhhhh";
 
-router.get("/user", async (req: Request, res: Response) => {
+router.get("/users", async (req: Request, res: Response) => {
   console.log("[Info] All users requested.");
 
   const db = await getDB();
@@ -23,10 +23,11 @@ router.get("/user", async (req: Request, res: Response) => {
 });
 
 router.post("/login", async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { username, pin } = req.body;
   console.log(`[Info] User ${username} requesting login.`);
 
-  if (!username || !password) {
+  if (!username || !pin) {
+    console.log(`[Sus] Username and password are required body: `, req.body);
     res.status(400).json({ error: "Username and password are required" });
     return;
   }
@@ -40,7 +41,7 @@ router.post("/login", async (req: Request, res: Response) => {
     return;
   }
 
-  const passwordMatch = await bcrypt.compare(password, user.password);
+  const passwordMatch = await bcrypt.compare(pin, user.password);
   if (!passwordMatch) {
     console.log(`[Sus] User "${username}" used wrong credentials.`);
     res.status(401).json({ error: "Invalid credentials" });
@@ -51,7 +52,8 @@ router.post("/login", async (req: Request, res: Response) => {
     expiresIn: "1d",
   });
 
-  res.send(token);
+  console.log(`[Info] User "${username}" logged in admin:${user.is_admin}.`);
+  res.json({token: token});
 });
 
 export default router;
