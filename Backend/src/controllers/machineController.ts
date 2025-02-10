@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Router } from "express";
-import { Machine } from "../DTOs/Machine";
+import { Machine } from "../DTOs/machine";
 
 const router = Router();
 
