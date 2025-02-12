@@ -1,6 +1,6 @@
 <div class="navbar z-50 bg-base-300 text-secondary-content p-3 rounded-b-lg shadow-lg">
   <div class="navbar-start">
-    <a routerLink="" class="btn btn-ghost text-xl">GymTracker</a>
+    <a routerLink="/machines" class="btn btn-ghost text-xl">GymTracker</a>
   </div>
 
   <div class="navbar-center hidden sm:flex z-50">
@@ -15,7 +15,7 @@
           </ul>
         </details>
       </li>
-      <li><a>Logout</a></li>
+      <li><a (click)="logout()">Logout</a></li>
     </ul>
   </div>
 
