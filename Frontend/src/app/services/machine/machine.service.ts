@@ -4,6 +4,7 @@ import { Training } from '../../models/training';
 import { MachineDTO } from '../../models/DTOs/machineDTO';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
+import { TrainingDTO } from '../../models/DTOs/trainingDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -12,19 +13,22 @@ import { map, Observable } from 'rxjs';
 export class MachineService {
   constructor(private http: HttpClient) {}
 
-  private apiUrl = 'http://localhost:8000/api/machine/machines';
+  private apiBaseUrl = 'http://localhost:8000/api/machine';
 
-  getTrainingsForMachine(machineId: number): Training[] {
-    return [
-      new Training(1, new Date('2025-01-01'), 10, 12, 14, 50, 55, 60),
-      new Training(2, new Date('2025-01-02'), 8, 10, 12, 45, 50, 55),
-      new Training(3, new Date('2025-01-03'), 9, 11, 13, 48, 53, 58),
-      new Training(4, new Date('2025-01-04'), 7, 9, 11, 40, 45, 50),
-      new Training(5, new Date('2025-01-05'), 6, 8, 10, 35, 40, 45),
-    ];
+  getTrainingsForMachine(machineId: number): Observable<{ machine: Machine; trainings: Training[] }> {
+
+    const url = `${this.apiBaseUrl}/${machineId}`;
+    return this.http.get<{ machine: MachineDTO; trainings: TrainingDTO[] }>(url)
+      .pipe(
+        map(response => ({
+          machine: new Machine(response.machine),
+          trainings: response.trainings.map(dto => new Training(dto))
+        }))
+      );
   }
 
   getMachines(): Observable<Machine[]> {
-    return this.http.get<MachineDTO[]>(this.apiUrl).pipe(map((machines) => machines.map((machineDto) => new Machine(machineDto))));
+    const url = `${this.apiBaseUrl}/machines`;
+    return this.http.get<MachineDTO[]>(url).pipe(map((machines) => machines.map((machineDto) => new Machine(machineDto))));
   }
 }

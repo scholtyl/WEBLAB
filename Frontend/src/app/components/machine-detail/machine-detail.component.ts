@@ -12,17 +12,17 @@ import { DatePipe } from '../../pipes/date-pipe';
   styleUrl: './machine-detail.component.css',
 })
 export class MachineDetailComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private machineService: MachineService
-  ) {}
+  constructor(private route: ActivatedRoute, private machineService: MachineService) {}
 
-  machine!: Machine;
-
-  getTrainings(): Training[] {
-    return this.machineService.getTrainingsForMachine(this.machine.id);
-  }
+  machine: Machine = { id: 1, lastTraining: new Date('11.11.1111'), name: 'loading...', lastWeight: 0 };
+  trainings?: Training[];
 
   ngOnInit() {
+    this.machineService
+      .getTrainingsForMachine(Number(this.route.snapshot.paramMap.get('id')))
+      .subscribe(({ machine, trainings }) => {
+        this.machine = machine;
+        this.trainings = trainings;
+      }, console.log);
   }
 }

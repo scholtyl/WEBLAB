@@ -1,25 +1,19 @@
+import { TrainingDTO } from "./DTOs/trainingDTO";
+
 export class Training {
-  constructor(
-    id: number,
-    date: Date,
-    rep1: number,
-    rep2: number,
-    rep3: number,
-    weight1: number,
-    weight2: number,
-    weight3: number
+  constructor(training : TrainingDTO
   ) {
-    this.id = id;
-    this.date = date;
-    this.rep1 = rep1;
-    this.rep2 = rep2;
-    this.rep3 = rep3;
-    this.weight1 = weight1;
-    this.weight2 = weight2;
-    this.weight3 = weight3;
+    this.id = training.id;
+    this.date = new Date(training.date);
+    this.rep1 = training.rep1;
+    this.rep2 = training.rep2;
+    this.rep3 = training.rep3;
+    this.weight1 = training.weight1;
+    this.weight2 = training.weight2;
+    this.weight3 = training.weight3;
   }
 
-  id: number;
+  id: string;
   date: Date;
   rep1: number;
   rep2: number;

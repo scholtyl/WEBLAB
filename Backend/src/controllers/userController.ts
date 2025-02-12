@@ -33,7 +33,7 @@ router.post("/login", async (req: Request, res: Response) => {
   }
 
   const db = await getDB();
-  const user = await db.get("SELECT * FROM users WHERE name = 'Laurin'");
+  const user = await db.get("SELECT * FROM users WHERE name = (?)", [username]);
 
   if (!user) {
     console.log(`[Sus] Requested user "${username}" does not exist.`);

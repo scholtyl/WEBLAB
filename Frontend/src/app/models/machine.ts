@@ -6,7 +6,7 @@ export class Machine {
     this.id = dto.id;
     this.name = dto.name;
     this.lastTraining = dto.lastTraining ? new Date(dto.lastTraining) : undefined;
-    this.lastWeight = this.lastWeight;
+    this.lastWeight = dto.lastWeight;
   }
 
   id: number;

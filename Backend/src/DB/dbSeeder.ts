@@ -62,4 +62,24 @@ export class DbSeeder {
       }
     }
   }
+
+  static async seedTrainings() {
+    const db = await getDB();
+    
+    const trainingId = "1";
+    const userId = "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+    const machineId = "1";
+    const trainingDate = "2024-02-12"; // Adjust as needed
+
+    const existingTraining = await db.get("SELECT id FROM trainings WHERE id = ?", [trainingId]);
+    if (!existingTraining) {
+      await db.run(
+        `INSERT INTO trainings (id, user_id, machine_id, date, 
+          reps1, weight1, reps2, weight2, reps3, weight3)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [trainingId, userId, machineId, trainingDate, 10, 50, 8, 55, 6, 60]
+      );
+      console.log("Default training for user Laurin on machine 1 added.");
+    }
+  }
 }
