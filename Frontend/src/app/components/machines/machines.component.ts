@@ -13,13 +13,12 @@ import { AuthService } from '../../services/auth/auth.service';
 export class MachinesComponent {
   constructor(private machineService: MachineService, private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-    let li = this.authService.isLoggedIn();
-    console.log('User is logged in:', this.authService.isLoggedIn());
-  }
+  Machines?: Machine[];
 
-  getMachines(): Machine[] {
-    return this.machineService.getMachines();
+  ngOnInit() {
+    this.machineService.getMachines().subscribe((result) => {
+      this.Machines = result;
+    }, console.log);
   }
 
   selectMachine(id: number): void {

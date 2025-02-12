@@ -1,6 +1,7 @@
 import sqlite3 from "sqlite3";
 import { open, Database } from "sqlite";
 import bcrypt from "bcrypt";
+import { DbSeeder } from "./dbSeeder";
 
 let db: Database | null = null;
 
@@ -23,18 +24,17 @@ async function getDB(): Promise<Database> {
             )
         `);
 
-        // Insert default user if they don't exist
-        const defaultUserId = "f47ac10b-58cc-4372-a567-0e02b2c3d479";
-        const existingUser = await db.get("SELECT id FROM users WHERE id = ?", [defaultUserId]);
-        const hashedPassword = await bcrypt.hash("5600", 10);
+        await db.exec(`
+            CREATE TABLE IF NOT EXISTS machines (
+                id TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
+                is_active INTEGER NOT NULL CHECK (is_active IN (0, 1))
+            )
+        `);
 
-        if (!existingUser) {
-            await db.run(
-                "INSERT INTO users (id, name, last_training, is_admin, password) VALUES (?, ?, ?, ?, ?)",
-                [defaultUserId, "Laurin", "2001-03-19", 1, hashedPassword]
-            );
-            console.log("Default user Laurin created.");
-        }
+        // Seed all the needed entities
+        DbSeeder.seedUsers();
+        DbSeeder.seedMachines();
     }
 
     return db;

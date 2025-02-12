@@ -24,11 +24,5 @@ export class MachineDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.machine = new Machine(
-      Number(this.route.snapshot.paramMap.get('id')),
-      'Bauchpresse',
-      new Date('1241-08-01'),
-      30
-    );
   }
 }

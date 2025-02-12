@@ -1,18 +1,16 @@
+import { MachineDTO } from "./DTOs/machineDTO";
+
 export class Machine {
-  constructor(
-    id: number,
-    name: string,
-    lastTraining?: Date,
-    weight?: number
-  ) {
-    this.id = id;
-    this.name = name;
-    this.lastTraining = lastTraining;
-    this.weight = weight;
+
+  constructor(dto: MachineDTO) {
+    this.id = dto.id;
+    this.name = dto.name;
+    this.lastTraining = dto.lastTraining ? new Date(dto.lastTraining) : undefined;
+    this.lastWeight = this.lastWeight;
   }
 
   id: number;
   name: string;
   lastTraining?: Date;
-  weight?: number;
+  lastWeight?: number;
 }

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
-import { User } from '../../models/user';
 import { DatePipe } from '../../pipes/date-pipe';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'user-list-component',
@@ -18,9 +18,9 @@ export class UserListComponent implements OnInit {
   users: User[] = [];
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((data) => {
-      this.users = data;
-    });
+    this.userService.getUsers().subscribe((result) => {
+      this.users = result;
+    }, console.log);
   }
 
   selectUser(name: string) {

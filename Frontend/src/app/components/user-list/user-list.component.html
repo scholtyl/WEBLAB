@@ -1,5 +1,5 @@
 <div class="flex justify-center flex-wrap flex-col content-center mt-4 gap-5">
-  
+
   @for (user of users; track $index) {
 
     <div (click)="selectUser(user.name!)" class="card card-side cursor-pointer bg-secondary w-96 shadow-xl">
@@ -11,6 +11,6 @@
         <p class="text-base-content">Last Training: {{user.lastTraining | datePipe}}</p>
       </div>
     </div>
-  } 
-  
+  }
+
 </div>
