@@ -11,12 +11,25 @@ router.get("/users", async (req: Request, res: Response) => {
   console.log("[Info] All users requested.");
 
   const db = await getDB();
-  const usersRaw = await db.all("SELECT * FROM users");
+
+  const query = `
+    SELECT 
+        u.*, 
+        t.latest_date AS latest_training_date
+    FROM users u
+    LEFT JOIN (
+        SELECT user_id, MAX(date) AS latest_date
+        FROM trainings
+        GROUP BY user_id
+    ) t ON u.id = t.user_id;
+`;
+
+const usersRaw = await db.all(query);
 
   const users: UserDTO[] = usersRaw.map((user: any) => ({
     id: user.id,
     name: user.name,
-    lastTraining: user.last_training ?? null, // Ensure null safety
+    lastTraining: user.latest_training_date ?? null, // Ensure null safety
   }));
 
   res.json(users);
