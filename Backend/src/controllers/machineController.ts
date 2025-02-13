@@ -38,15 +38,15 @@ router.get("/:id", async (req: Request, res: Response) => {
   const trainingsRaw = await db.all("SELECT * FROM trainings WHERE user_id = (?) AND machine_id = (?)", [res.locals.user.id, req.params.id]);
   const trainings: TrainingDTO[] = trainingsRaw.map((training: any) => ({
     id: training.id,
+    machine_id: training.machine_id,
     date: training.date,
-    rep1: training.reps1,
-    rep2: training.reps2,
-    rep3: training.reps3,
+    reps1: training.reps1,
+    reps2: training.reps2,
+    reps3: training.reps3,
     weight1: training.weight1,
     weight2: training.weight2,
     weight3: training.weight3,
   }));
-  
   res.json({machine: machine, trainings: trainings });
 });
 

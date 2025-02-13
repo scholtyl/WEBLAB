@@ -33,7 +33,7 @@ export class DbSeeder {
           user.is_admin,
           hashedPassword,
         ]);
-        console.log(`User ${user.name} created.`);
+        console.log(`[Info] User ${user.name} created.`);
       }
     }
   }
@@ -58,7 +58,7 @@ export class DbSeeder {
           machine.name,
           machine.isActive,
         ]);
-        console.log(`Machine ${machine.name} added.`);
+        console.log(`[info] Machine ${machine.name} added.`);
       }
     }
   }
@@ -79,7 +79,7 @@ export class DbSeeder {
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [trainingId, userId, machineId, trainingDate, 10, 50, 8, 55, 6, 60]
       );
-      console.log("Default training for user Laurin on machine 1 added.");
+      console.log("[Info] Default training for user Laurin on machine 1 added.");
     }
   }
 }

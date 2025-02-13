@@ -1,6 +1,6 @@
 <!-- back button -->
 <div class="pt-2 flex flex-col items-center">
-  <div class="w-full max-w-lg">
+  <div class="w-full max-w-lg" [ngClass]="{ 'opacity-50 pointer-events-none': editing }">
     <button [routerLink]="'/machines'" class="btn btn-outline btn-sm">&lt;Back</button>
   </div>
 </div>
@@ -21,22 +21,23 @@
       [ngClass]="{ 'border border-orange-500 bg-gray-900': editing }"
     >
       @if(editing) {
-      <div>
-        <p class="text-lg">Editing training from: {{ editTraining?.date | datePipe}}</p>
-      </div>
+        <div class="w-full flex gap-4 max-w-lg">
+          <button (click)="cancel()" class="btn btn-outline ml-2 btn-sm">&lt; Cancel</button>
+          <p class="text-lg">Editing training from: {{ editTraining?.date | datePipe}}</p>
+        </div>
       }
       <div class="flex w-full gap-4 justify-between text-md">
         <div class="basis-1/6 text-center flex justify-center items-center">
           <p><b>KG:</b></p>
         </div>
         <div class="basis-1/4">
-          <input type="number" step=".5" class="input text-xl input-bordered input-secondary w-4/5" />
+          <input type="number" step=".5" [(ngModel)]="editTraining!.weight1!" class="input text-xl input-bordered input-secondary w-4/5" />
         </div>
         <div class="basis-1/4">
-          <input type="number" step=".5" class="input text-xl input-bordered input-secondary w-4/5" />
+          <input type="number" step=".5" [(ngModel)]="editTraining!.weight2!" class="input text-xl input-bordered input-secondary w-4/5" />
         </div>
         <div class="basis-1/4">
-          <input type="number" step=".5" class="input text-xl input-bordered input-secondary w-4/5" />
+          <input type="number" step=".5" [(ngModel)]="editTraining!.weight3!" class="input text-xl input-bordered input-secondary w-4/5" />
         </div>
       </div>
       <div class="w-full">
@@ -47,13 +48,13 @@
           <p><b>Reps:</b></p>
         </div>
         <div class="basis-1/4">
-          <input type="number" step=".5" class="input text-xl input-bordered input-secondary w-4/5" />
+          <input type="number" step=".5" [(ngModel)]="editTraining!.rep1!" class="input text-xl input-bordered input-secondary w-4/5" />
         </div>
         <div class="basis-1/4">
-          <input type="number" step=".5" class="input text-xl input-bordered input-secondary w-4/5" />
+          <input type="number" step=".5" [(ngModel)]="editTraining!.rep2!" class="input text-xl input-bordered input-secondary w-4/5" />
         </div>
         <div class="basis-1/4">
-          <input type="number" step=".5" class="input text-xl input-bordered input-secondary w-4/5" />
+          <input type="number" step=".5" [(ngModel)]="editTraining!.rep3!" class="input text-xl input-bordered input-secondary w-4/5" />
         </div>
       </div>
       <div class="w-full flex justify-center gap-4">
@@ -82,7 +83,7 @@
           </thead>
           <tbody class="text-primary">
             @for (training of trainings; track $index) {
-            <tr (click)="edit(training.id)" class="border-gray-600 cursor-pointer">
+            <tr (click)="edit(training.id!)" class="border-gray-600 cursor-pointer">
               <td class="py-1">
                 <p>{{ training.date | datePipe }}</p>
               </td>

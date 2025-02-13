@@ -22,7 +22,7 @@ export class MachineService {
       .pipe(
         map(response => ({
           machine: new Machine(response.machine),
-          trainings: response.trainings.map(dto => new Training(dto))
+          trainings: response.trainings.map(dto => Training.fromDTO(dto))
         }))
       );
   }
