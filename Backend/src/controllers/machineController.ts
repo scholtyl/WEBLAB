@@ -22,10 +22,10 @@ router.get("/machines", async (req: Request, res: Response) => {
         SELECT * 
         FROM trainings 
         WHERE user_id = ? 
-        ORDER BY date DESC
+        ORDER BY date DESC, rowid DESC
+        limit 1
     ) t ON m.id = t.machine_id
     WHERE m.is_active = 1
-    GROUP BY m.id;
 `;
 
   const machinesRaw = await db.all(query, [userId]);
