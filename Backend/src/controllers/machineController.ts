@@ -8,16 +8,36 @@ const router = Router();
 
 router.get("/machines", async (req: Request, res: Response) => {
   console.log("[Info] All machines requested.");
+  const userId = res.locals.user.id;
 
   const db = await getDB();
-  const machinesRaw = await db.all("SELECT * FROM machines");
+  const query = `
+    SELECT 
+        m.*, 
+        t.id AS training_id, 
+        t.date, 
+        t.weight1
+    FROM machines m
+    LEFT JOIN (
+        SELECT * 
+        FROM trainings 
+        WHERE user_id = ? 
+        ORDER BY date DESC
+    ) t ON m.id = t.machine_id
+    WHERE m.is_active = 1
+    GROUP BY m.id;
+`;
 
-  const machines: MachineDTO[] = machinesRaw.filter(m => m.is_active).map((machine: any) => ({
-    id: machine.id,
-    name: machine.name,
-    lastTraining: "2001-03-19",
-    lastWeight: 22
-  }));
+  const machinesRaw = await db.all(query, [userId]);
+
+  const machines: MachineDTO[] = machinesRaw
+    .filter((m) => m.is_active)
+    .map((machine: any) => ({
+      id: machine.id,
+      name: machine.name,
+      lastTraining: machine.date,
+      lastWeight: machine.weight1,
+    }));
 
   res.json(machines);
 });
@@ -26,16 +46,10 @@ router.get("/:id", async (req: Request, res: Response) => {
   console.log(`[Info] Detail for machine ${req.params.id} requested.`);
 
   const db = await getDB();
-  const machineRaw = await db.get("SELECT * FROM machines WHERE id = (?)", [req.params.id]);
-  
-  const machine: MachineDTO = {
-    id: machineRaw.id,
-    name: machineRaw.name,
-    lastTraining: "2001-03-19",
-    lastWeight: 22
-  };
-
-  const trainingsRaw = await db.all("SELECT * FROM trainings WHERE user_id = (?) AND machine_id = (?)", [res.locals.user.id, req.params.id]);
+  const trainingsRaw = await db.all("SELECT * FROM trainings WHERE user_id = (?) AND machine_id = (?)", [
+    res.locals.user.id,
+    req.params.id,
+  ]);
   const trainings: TrainingDTO[] = trainingsRaw.map((training: any) => ({
     id: training.id,
     machine_id: training.machine_id,
@@ -47,7 +61,17 @@ router.get("/:id", async (req: Request, res: Response) => {
     weight2: training.weight2,
     weight3: training.weight3,
   }));
-  res.json({machine: machine, trainings: trainings });
+  
+  const latestTraining = [...trainings].reverse()[0]
+  const machineRaw = await db.get("SELECT * FROM machines WHERE id = (?)", [req.params.id]);
+  const machine: MachineDTO = {
+    id: machineRaw.id,
+    name: machineRaw.name,
+    lastTraining: latestTraining.date,
+    lastWeight: latestTraining.weight1,
+  };
+
+  res.json({ machine: machine, trainings: trainings });
 });
 
 export default router;

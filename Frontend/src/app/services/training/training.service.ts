@@ -17,6 +17,22 @@ export class TrainingService {
     return this.http.delete(url);
   }
 
+  editTraining(training: Training): Observable<any> {
+    const trainingDTO: TrainingDTO = {
+      id: training.id,
+      machine_id: training.machineId,
+      date: training.date!.toISOString().split("T")[0],
+      weight1: training.weight1,
+      weight2: training.weight2,
+      weight3: training.weight3,
+      reps1: training.rep1,
+      reps2: training.rep2,
+      reps3: training.rep3,
+    };
+
+    return this.http.put(this.apiBaseUrl, trainingDTO);
+  }
+
   addTraining(training: Training): Observable<Training[]> {
     const trainingDTO: TrainingDTO = {
       machine_id: training.machineId,
@@ -28,9 +44,8 @@ export class TrainingService {
       reps3: training.rep3,
     };
 
-    const url = `${this.apiBaseUrl}`;
     return this.http
-      .post<TrainingDTO[]>(url, trainingDTO)
+      .post<TrainingDTO[]>(this.apiBaseUrl, trainingDTO)
       .pipe(map((response) => response.map((dto) => Training.fromDTO(dto))));
   }
 }

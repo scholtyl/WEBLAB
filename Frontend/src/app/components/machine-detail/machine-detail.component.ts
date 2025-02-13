@@ -19,9 +19,18 @@ export class MachineDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private machineService: MachineService,
     private trainingService: TrainingService
-  ) {}
+  ) {
 
-  machine: Machine = { id: 1, lastTraining: new Date('11.11.1111'), name: 'loading...', lastWeight: 0 };
+    // Create dummy machine to load html before ngOnInit
+    this.machine = {
+      id: Number(this.route.snapshot.paramMap.get('id')),
+      lastTraining: new Date('11.11.1111'),
+      name: 'loading...',
+      lastWeight: 0,
+    };
+  }
+
+  machine: Machine;
   trainings?: Training[];
   editing: boolean = false;
 
@@ -38,9 +47,18 @@ export class MachineDetailComponent implements OnInit {
   }
 
   submit() {
-    this.trainingService.addTraining(this.editTraining!).subscribe((result) => {
-      this.trainings = result.reverse();
-    }, console.log);
+    if (this.editing) {
+      // Submit for EDIT
+      this.trainingService.editTraining(this.editTraining!).subscribe((result) => {
+        this.editing = false;
+      });
+    } else {
+      // Submit for ADD
+      console.log(this.editTraining);
+      this.trainingService.addTraining(this.editTraining!).subscribe((result) => {
+        this.trainings = result.reverse();
+      }, console.log);
+    }
   }
 
   del() {
@@ -68,14 +86,19 @@ export class MachineDetailComponent implements OnInit {
   initTraining() {
     let lastTraining = this.trainings![0];
 
-    this.editTraining = {
-      machineId: lastTraining.machineId,
-      rep1: lastTraining.rep1,
-      rep2: lastTraining.rep1,
-      rep3: lastTraining.rep1,
-      weight1: lastTraining.weight1,
-      weight2: lastTraining.weight1,
-      weight3: lastTraining.weight1,
-    };
+    if (lastTraining) {
+      this.editTraining = {
+        machineId: lastTraining.machineId,
+        date: lastTraining.date,
+        rep1: lastTraining.rep1,
+        rep2: lastTraining.rep1,
+        rep3: lastTraining.rep1,
+        weight1: lastTraining.weight1,
+        weight2: lastTraining.weight1,
+        weight3: lastTraining.weight1,
+      };
+    } else {
+      this.editTraining = new Training(undefined, String(this.machine.id));
+    }
   }
 }

@@ -25,6 +25,48 @@ router.delete("/:id", async (req: Request, res: Response) => {
   }
 });
 
+router.put("", async (req: Request, res: Response) => {
+  const training = req.body as TrainingDTO;
+  console.log(`[Info] Updating training ${training.id}.`);
+
+  if (!training.id) {
+    res.status(400).json({ message: "Training ID is required." });
+  }
+
+  const db = await getDB();
+  const trainingRaw = await db.get("SELECT * FROM trainings WHERE id = ?", training.id);
+
+  if (!trainingRaw) {
+    res.status(404).json({ message: `No training found with id ${training.id}` });
+  }
+
+  // Check if user is the owner of the training
+  if (trainingRaw.user_id !== res.locals.user.id) {
+    res.status(403).json({ message: "You are not authorized to update this training." });
+  }
+
+  const query = `
+    UPDATE trainings
+    SET machine_id = ?, date = ?, reps1 = ?, weight1 = ?, reps2 = ?, weight2 = ?, reps3 = ?, weight3 = ?
+    WHERE id = ?;
+  `;
+
+  await db.run(query, [
+    training.machine_id,
+    training.date,
+    training.reps1,
+    training.weight1,
+    training.reps2,
+    training.weight2,
+    training.reps3,
+    training.weight3,
+    training.id,
+  ]);
+
+  console.log(`[Success] Training ${training.id} updated.`);
+  res.status(200).json({ message: "Training updated successfully." });
+});
+
 router.post("", async (req: Request, res: Response) => {
   console.log(`[Info] New training registered.`);
 
@@ -60,6 +102,7 @@ router.post("", async (req: Request, res: Response) => {
   const trainings: TrainingDTO[] = trainingsRaw.map((training: any) => ({
     id: training.id,
     date: training.date,
+    machine_id: training.machine_id,
     reps1: training.reps1,
     reps2: training.reps2,
     reps3: training.reps3,
