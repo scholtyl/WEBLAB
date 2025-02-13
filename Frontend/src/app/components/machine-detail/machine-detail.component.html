@@ -7,7 +7,7 @@
 <div class="pt-2 flex flex-col items-center">
   <div class="max-w-lg">
     <!-- Header -->
-    <div class="flex justify-center gap-5 items-center">
+    <div class="flex justify-center gap-5 items-center" [ngClass]="{ 'opacity-50 pointer-events-none': editing }">
       <img src="./../../media/Machine{{ machine.id }}.jpg" class="w-1/3 rounded-xl" />
       <div class="text-lg">
         <h1>{{ machine.name }}</h1>
@@ -16,7 +16,15 @@
       </div>
     </div>
     <!-- Form -->
-    <div class="text-xl gap-4 pt-8 flex w-full flex-col justify-center items-center">
+    <div
+      class="text-xl gap-4 mt-8 py-2 flex w-full flex-col justify-center items-center"
+      [ngClass]="{ 'border border-orange-500 bg-gray-900': editing }"
+    >
+      @if(editing) {
+      <div>
+        <p class="text-lg">Editing training from: {{ editTraining?.date | datePipe}}</p>
+      </div>
+      }
       <div class="flex w-full gap-4 justify-between text-md">
         <div class="basis-1/6 text-center flex justify-center items-center">
           <p><b>KG:</b></p>
@@ -48,14 +56,20 @@
           <input type="number" step=".5" class="input text-xl input-bordered input-secondary w-4/5" />
         </div>
       </div>
-      <div class="w-full flex justify-center">
-        <button class="btn btn-outline">Enter training</button>
+      <div class="w-full flex justify-center gap-4">
+        <button (click)="submit()" class="btn btn-outline btn-success">
+          {{ editing ? "Edit" : "Enter" }} training
+        </button>
+        @if(editing){<button (click)="del()" class="btn btn-outline btn-error">Delete Training</button>}
       </div>
     </div>
 
     <!-- Old Trainings -->
     <div class="mt-5 w-full">
-      <div class="overflow-x-auto">
+      <div
+        class="overflow-x-auto opacity-50 pointer-events-none"
+        [ngClass]="{ 'opacity-50 pointer-events-none': editing }"
+      >
         <table class="table text-lg text-center">
           <!-- head -->
           <thead class="text-base-content text-lg">
@@ -68,7 +82,7 @@
           </thead>
           <tbody class="text-primary">
             @for (training of trainings; track $index) {
-            <tr class="border-gray-600">
+            <tr (click)="edit(training.id)" class="border-gray-600 cursor-pointer">
               <td class="py-1">
                 <p>{{ training.date | datePipe }}</p>
               </td>
