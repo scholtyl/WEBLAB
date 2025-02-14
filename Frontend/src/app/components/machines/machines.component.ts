@@ -3,6 +3,7 @@ import { Machine } from '../../models/machine';
 import { MachineService } from '../../services/machine/machine.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { URLService } from '../../services/url/url.service';
 
 @Component({
   selector: 'machines-component',
@@ -19,6 +20,11 @@ export class MachinesComponent {
     this.machineService.getMachines().subscribe((result) => {
       this.Machines = result;
     }, console.log);
+  }
+
+  machineURL(id: number)
+  {
+    return URLService.BackendURL + `/machines/Machine${id}.jpg`;
   }
 
   isToday(date?: Date) {

@@ -3,13 +3,14 @@
     <p class="text-xl text-center font-bold">Admin Page</p>
     <div class="card gap-2 p-3 mt-3 bg-base-300 rounded-box place-items-center">
       <p>Add Machine</p>
-      <input type="text" placeholder="Machine Name" class="input input-bordered w-full max-w-xs" />
+      <input [(ngModel)]="machineName" type="text" placeholder="Machine Name" class="input input-bordered w-full max-w-xs" />
       <input
+      [(ngModel)]="fileinput"
         (change)="onFileSelected($event)"
         type="file"
         class="file-input file-input-bordered file-input-secondary w-full max-w-xs"
       />
-      <button class="btn btn-outline text-success" (click)="uploadImage()">Add Machine</button>
+      <button class="btn btn-outline text-success" (click)="addMachine()">Add Machine</button>
     </div>
 
     <div class="divider">OR</div>

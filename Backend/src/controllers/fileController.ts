@@ -22,9 +22,9 @@ const upload = multer({ storage: storage });
 
 router.post("/upload", upload.single("image"), async (req: Request, res: Response) => {
   if (!req.file) {
-    res.status(400).send("No file uploaded.");
+    res.status(400).json("No file uploaded.");
   }
-  res.status(200).send("all good");
+  res.status(200).json("All good");
 });
 
 router.use(express.static("public"));

@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { URLService } from '../url/url.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/api/user/login'; // Your login endpoint
+  private apiUrl = URLService.BackendURL + '/api/user/login'; // Your login endpoint
   private tokenKey = 'auth_token'; // Key to store JWT token in localStorage
   private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public currentUser: Observable<any> = this.currentUserSubject.asObservable();

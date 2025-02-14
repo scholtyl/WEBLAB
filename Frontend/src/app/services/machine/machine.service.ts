@@ -5,6 +5,7 @@ import { MachineDTO } from '../../models/DTOs/machineDTO';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { TrainingDTO } from '../../models/DTOs/trainingDTO';
+import { URLService } from '../url/url.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ import { TrainingDTO } from '../../models/DTOs/trainingDTO';
 export class MachineService {
   constructor(private http: HttpClient) {}
 
-  private apiBaseUrl = 'http://localhost:8000/api/machine';
+  private apiBaseUrl = URLService.BackendURL + '/api/machine';
 
   getTrainingsForMachine(machineId: number): Observable<{ machine: Machine; trainings: Training[] }> {
 

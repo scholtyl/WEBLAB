@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Training } from '../../models/training';
 import { TrainingDTO } from '../../models/DTOs/trainingDTO';
+import { URLService } from '../url/url.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { TrainingDTO } from '../../models/DTOs/trainingDTO';
 export class TrainingService {
   constructor(private http: HttpClient) {}
 
-  private apiBaseUrl = 'http://localhost:8000/api/training';
+  private apiBaseUrl = URLService.BackendURL + 'api/training';
 
   deleteTraining(trainingId: string): Observable<any> {
     const url = `${this.apiBaseUrl}/${trainingId}`;

@@ -7,6 +7,7 @@ import { DatePipe } from '../../pipes/date-pipe';
 import { NgClass } from '@angular/common';
 import { TrainingService } from '../../services/training/training.service';
 import { FormsModule } from '@angular/forms';
+import { URLService } from '../../services/url/url.service';
 
 @Component({
   selector: 'app-machine-detail',
@@ -102,5 +103,10 @@ export class MachineDetailComponent implements OnInit {
     } else {
       this.editTraining = new Training(undefined, String(this.machine.id));
     }
+  }
+
+  machineURL(id: number)
+  {
+    return URLService.BackendURL + `/machines/Machine${id}.jpg`;
   }
 }
