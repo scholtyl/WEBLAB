@@ -41,9 +41,9 @@ export class AuthService {
   setCurrentUser(token: string): void {
     const decodedToken = this.decodeJwt(token);
     this.currentUserSubject.next({
-      username: decodedToken.username,
+      username: decodedToken.name,
       id: decodedToken.id,
-      role: decodedToken.role,
+      isAdmin: decodedToken.isAdmin,
     });
   }
 
@@ -62,5 +62,10 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!this.getToken();
+  }
+
+  isAdmin(): boolean {
+    const currentUser = this.currentUserSubject.value;
+    return currentUser && currentUser.isAdmin;
   }
 }

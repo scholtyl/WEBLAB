@@ -1,21 +1,16 @@
 <div class="navbar z-50 bg-base-300 text-secondary-content p-3 rounded-b-lg shadow-lg">
   <div class="navbar-start">
-    <a routerLink="/machines" class="btn btn-ghost text-xl">GymTracker</a>
+    <a routerLink="/machines" class="btn btn-ghost text-xl font-bold">GymTracker</a>
   </div>
 
+  @if(isloggedIn()) {
   <div class="navbar-center hidden sm:flex z-50">
     <ul class="menu menu-horizontal px-1">
       <li><a routerLink="/machines">Machines</a></li>
-      <li>
-        <details>
-          <summary>Parent</summary>
-          <ul class="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </details>
-      </li>
-      <li><a (click)="logout()">Logout</a></li>
+      @if(isAdmin()){
+      <li><a routerLink="/admin">Admin</a></li>
+      }
+      <li><a class="text-error" (click)="logout()">Logout</a></li>
     </ul>
   </div>
 
@@ -24,20 +19,14 @@
       <div tabindex="0" role="button" class="btn btn-ghost sm:hidden">
         <i class="bx bx-menu-alt-right text-2xl"></i>
       </div>
-      <ul
-        tabindex="0"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-      >
+      <ul tabindex="0" class="menu menu-sm gap-3 dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
         <li><a routerLink="/machines">Machines</a></li>
-        <li>
-          <a>Parent</a>
-          <ul class="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </li>
-        <li><a (click)="logout()">Logout</a></li>
+        @if(isAdmin()){
+        <li><a routerLink="/admin">Admin</a></li>
+        }
+        <li><a class="text-error" (click)="logout()">Logout</a></li>
       </ul>
     </div>
   </div>
+  }
 </div>

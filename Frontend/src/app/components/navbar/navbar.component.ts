@@ -12,6 +12,16 @@ export class NavbarComponent {
 
   constructor(private authService: AuthService, private router : Router){}
 
+  isAdmin()
+  {
+    return this.authService.isAdmin();
+  }
+
+  isloggedIn()
+  {
+    return this.authService.isLoggedIn();
+  }
+
   logout()
   {
     this.authService.logout();

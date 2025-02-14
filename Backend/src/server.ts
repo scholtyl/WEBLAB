@@ -5,6 +5,7 @@ import machineController from "./controllers/machineController";
 import { authMiddleware } from "./middlewares/jwtMiddleware";
 import cors from 'cors';
 import trainingController from "./controllers/trainingController";
+import fileController from "./controllers/fileController";
 
 dotenv.config(); // Load environment variables
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/api/user", userController);
 app.use("/api/machine",authMiddleware, machineController);
 app.use("/api/training",authMiddleware, trainingController);
+app.use(fileController);
 
 app.get("**", (req: Request, res: Response) => {
     res.status(404).send("Sorry, no endpoint here!");
