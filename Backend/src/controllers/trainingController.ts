@@ -73,7 +73,7 @@ router.post("", async (req: Request, res: Response) => {
   const userId = res.locals.user.id;
   const training = req.body as TrainingDTO;
 
-  const date = new Date().toISOString().split("T")[0];
+  const date = new Date().toISOString();
   const trainingId = uuidv4();
 
   const query = `

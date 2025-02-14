@@ -3,6 +3,7 @@ import { Router } from "express";
 import { MachineDTO } from "../DTOs/machineDTO";
 import getDB from "../DB/db";
 import { TrainingDTO } from "../DTOs/trainingDTO";
+import { Console } from "console";
 
 const router = Router();
 
@@ -13,31 +14,30 @@ router.get("/machines", async (req: Request, res: Response) => {
   const db = await getDB();
   const query = `
     SELECT 
-        m.*, 
-        t.id AS training_id, 
-        t.date, 
-        t.weight1
+      m.*, 
+      t.date AS last_training, 
+      t.weight1 AS last_weight
     FROM machines m
-    LEFT JOIN (
-        SELECT * 
-        FROM trainings 
-        WHERE user_id = ? 
-        ORDER BY date DESC, rowid DESC
-        limit 1
-    ) t ON m.id = t.machine_id
-    WHERE m.is_active = 1
-`;
+    LEFT JOIN trainings t 
+      ON t.machine_id = m.id
+      AND t.user_id = ?
+      AND t.date = (
+          SELECT MAX(t2.date) 
+          FROM trainings t2 
+          WHERE t2.machine_id = m.id 
+          AND t2.user_id = ?
+      )
+    WHERE m.is_active = 1;
+  `;
 
-  const machinesRaw = await db.all(query, [userId]);
+  const machinesRaw = await db.all(query, userId, userId);
 
-  const machines: MachineDTO[] = machinesRaw
-    .filter((m) => m.is_active)
-    .map((machine: any) => ({
-      id: machine.id,
-      name: machine.name,
-      lastTraining: machine.date,
-      lastWeight: machine.weight1,
-    }));
+  const machines: MachineDTO[] = machinesRaw.map((machine: any) => ({
+    id: machine.id,
+    name: machine.name,
+    lastTraining: machine.last_training,
+    lastWeight: machine.last_weight,
+  }));
 
   res.json(machines);
 });
@@ -61,8 +61,8 @@ router.get("/:id", async (req: Request, res: Response) => {
     weight2: training.weight2,
     weight3: training.weight3,
   }));
-  
-  const latestTraining = [...trainings].reverse()[0]
+
+  const latestTraining = [...trainings].reverse()[0];
   const machineRaw = await db.get("SELECT * FROM machines WHERE id = (?)", [req.params.id]);
   const machine: MachineDTO = {
     id: machineRaw.id,
