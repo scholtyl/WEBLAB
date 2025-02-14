@@ -67,8 +67,8 @@ router.get("/:id", async (req: Request, res: Response) => {
   const machine: MachineDTO = {
     id: machineRaw.id,
     name: machineRaw.name,
-    lastTraining: latestTraining.date,
-    lastWeight: latestTraining.weight1,
+    lastTraining: latestTraining?.date,
+    lastWeight: latestTraining?.weight1,
   };
 
   res.json({ machine: machine, trainings: trainings });

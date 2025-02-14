@@ -11,8 +11,8 @@
       <img src="./../../media/Machine{{ machine.id }}.jpg" class="w-1/3 rounded-xl" />
       <div class="text-lg">
         <h1>{{ machine.name }}</h1>
-        <p>Last training: {{ machine.lastTraining | datePipe }}</p>
-        <p>Last weight: {{ machine.lastWeight }} Kg</p>
+        <p>Last training: {{ machine.lastTraining ? (machine.lastTraining | datePipe) : "??"}}</p>
+        <p>Last weight: {{ machine.lastWeight ? machine.lastWeight : "??" }} Kg</p>
       </div>
     </div>
     <!-- Form -->
