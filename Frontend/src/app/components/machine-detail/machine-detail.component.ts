@@ -1,5 +1,5 @@
 import { Component, NgModule, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Machine } from '../../models/machine';
 import { Training } from '../../models/training';
 import { MachineService } from '../../services/machine/machine.service';
@@ -18,7 +18,8 @@ export class MachineDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private machineService: MachineService,
-    private trainingService: TrainingService
+    private trainingService: TrainingService,
+    private router : Router
   ) {
 
     // Create dummy machine to load html before ngOnInit
@@ -57,6 +58,7 @@ export class MachineDetailComponent implements OnInit {
       console.log(this.editTraining);
       this.trainingService.addTraining(this.editTraining!).subscribe((result) => {
         this.trainings = result.reverse();
+        this.router.navigate(["/machines"]);
       }, console.log);
     }
   }

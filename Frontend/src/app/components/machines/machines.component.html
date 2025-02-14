@@ -10,7 +10,7 @@
     </figure>
     <div class="p-3 mx-auto flex justify-center flex-col items-center">
       <h2 class="card-title text-base-content">
-        {{machine.name}}<i class="bx bx-calendar-x text-info text-md"></i>
+        {{machine.name}} @if(isToday(machine.lastTraining)){<i class="bx bx-calendar-check text-success text-md"></i>}@else {<i class="bx bx-calendar-x text-info text-md"></i>}
       </h2>
       <p class="text-base-content">Last Weight: {{ machine.lastWeight ?? "??" }} Kg</p>
     </div>
