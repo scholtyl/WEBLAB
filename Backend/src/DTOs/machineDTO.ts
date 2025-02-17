@@ -3,4 +3,5 @@ export interface MachineDTO {
   name: string;
   lastTraining?: string | undefined;
   lastWeight?: number | undefined;
+  isActive?: boolean | undefined;
 }

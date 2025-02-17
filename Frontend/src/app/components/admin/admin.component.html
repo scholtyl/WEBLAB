@@ -3,9 +3,14 @@
     <p class="text-xl text-center font-bold">Admin Page</p>
     <div class="card gap-2 p-3 mt-3 bg-base-300 rounded-box place-items-center">
       <p>Add Machine</p>
-      <input [(ngModel)]="machineName" type="text" placeholder="Machine Name" class="input input-bordered w-full max-w-xs" />
       <input
-      [(ngModel)]="fileinput"
+        [(ngModel)]="machineName"
+        type="text"
+        placeholder="Machine Name"
+        class="input input-bordered w-full max-w-xs"
+      />
+      <input
+        [(ngModel)]="fileinput"
         (change)="onFileSelected($event)"
         type="file"
         class="file-input file-input-bordered file-input-secondary w-full max-w-xs"
@@ -17,55 +22,45 @@
 
     <div class="card bg-base-300 rounded-box flex place-items-center py-3 gap-1">
       <p>De/Activate Machine</p>
-      <div class="flex flex-wrap gap-1 justify-center ">
-
+      <div class="flex flex-wrap gap-1 justify-center">
+        @for (machine of machines; track $index) {
         <div class="card bg-base-200 rounded-box">
           <div class="form-control p-1">
             <label class="label cursor-pointer gap-2">
-              <span class="label-text">Lat-Zug</span>
-              <input type="checkbox" class="toggle" checked="checked" />
+              <span class="label-text">{{machine.name}}</span>
+              <input type="checkbox" class="toggle" [checked]="machine.isActive" (change)="switchActivation(machine.id, $event)"/>
             </label>
           </div>
         </div>
-
-        <div class="card bg-base-200 rounded-box">
-          <div class="form-control p-1">
-            <label class="label cursor-pointer gap-2">
-              <span class="label-text">Lat-Zug</span>
-              <input type="checkbox" class="toggle" checked="checked" />
-            </label>
-          </div>
-        </div>
+        }
       </div>
-    </div>
 
-    <div class="divider">OR</div>
+      <div class="divider">OR</div>
 
-    <div class="card bg-base-300 rounded-box flex place-items-center py-3 gap-2">
-      <p>Reset User</p>
-      <input type="text" placeholder="New password" class="input input-bordered w-full max-w-xs" />
-      <div class="flex flex-wrap gap-1 justify-center ">
+      <div class="card bg-base-300 rounded-box flex place-items-center py-3 gap-2">
+        <p>Reset User</p>
+        <input type="text" placeholder="New password" class="input input-bordered w-full max-w-xs" />
+        <div class="flex flex-wrap gap-1 justify-center">
+          <div class="card bg-base-200 rounded-box">
+            <div class="form-control p-1">
+              <label class="label cursor-pointer gap-2">
+                <span class="label-text">Laurin</span>
+                <input type="radio" name="radio-user" class="radio" />
+              </label>
+            </div>
+          </div>
 
-        <div class="card bg-base-200 rounded-box">
-          <div class="form-control p-1">
-            <label class="label cursor-pointer gap-2">
-              <span class="label-text">Laurin</span>
-              <input type="radio" name="radio-user" class="radio" />
-            </label>
+          <div class="card bg-base-200 rounded-box">
+            <div class="form-control p-1">
+              <label class="label cursor-pointer gap-2">
+                <span class="label-text">Gast</span>
+                <input type="radio" name="radio-user" class="radio" />
+              </label>
+            </div>
           </div>
         </div>
-
-        <div class="card bg-base-200 rounded-box">
-          <div class="form-control p-1">
-            <label class="label cursor-pointer gap-2">
-              <span class="label-text">Gast</span>
-              <input type="radio" name="radio-user" class="radio" />
-            </label>
-          </div>
-        </div>
-
+        <button class="btn btn-outline text-red-500">Set PW</button>
       </div>
-      <button class="btn btn-outline text-red-500" >Set PW</button>
     </div>
   </div>
 </div>
