@@ -23,9 +23,28 @@ const upload = multer({ storage: storage });
 
 router.post("/upload", upload.single("image"), async (req: Request, res: Response) => {
   if (!req.file) {
-    res.status(400).json("No file uploaded.");
+    res.status(400).json({ error: "No file uploaded." });
+    return;
   }
-  res.status(200).json("All good");
+
+  const machineName = req.body.name;
+  if (!machineName) {
+    res.status(400).json({ error: "Machine name is required." });
+    return;
+  }
+
+  const db = await getDB();
+  const resId = await db.get(`SELECT MAX(id) AS max_id FROM machines`);
+  const newId: number = resId?.max_id ? Number(resId.max_id) + 1 : 1;
+
+  console.log(newId);
+  await db.run(
+    `INSERT INTO machines (id, name, is_active) VALUES (?, ?, ?)`,
+    [newId, machineName, 1]
+  );
+
+  console.log(`[ADMIN] Machine '${machineName}' added with ID: ${newId}.`);
+  res.status(200).json(`[INFO] Machine '${machineName}' added with ID: ${newId}.`);
 });
 
 router.get("/machines", async (req: Request, res: Response) => {

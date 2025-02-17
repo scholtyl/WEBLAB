@@ -1,2 +1,8 @@
 Backend/database.sqlite
-Backend/public/machines/
+Backend/public/machines/*
+!Backend/public/machines/Machine1.jpg
+!Backend/public/machines/Machine2.jpg
+!Backend/public/machines/Machine3.jpg
+!Backend/public/machines/Machine4.jpg
+!Backend/public/machines/Machine5.jpg
+!Backend/public/machines/Machine6.jpg
