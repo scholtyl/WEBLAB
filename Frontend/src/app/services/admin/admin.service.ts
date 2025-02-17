@@ -32,7 +32,13 @@ export class AdminService {
   switchActivation(machineId : number, activated: boolean): Observable<any> {
     const url = `${this.apiBaseUrl}/switch`;
     return this.http
-      .put<MachineDTO[]>(url, {machineId: machineId, toActivated: activated});
+      .put<any>(url, {machineId: machineId, toActivated: activated});
+  }
+
+  updatePin(userId : number, pin: string): Observable<any> {
+    const url = `${this.apiBaseUrl}/setPin`;
+    return this.http
+      .put<any>(url, {userId: userId, pin: pin});
   }
 
 }

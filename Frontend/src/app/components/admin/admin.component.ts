@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin/admin.service';
 import { Machine } from '../../models/machine';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -11,18 +13,25 @@ import { Machine } from '../../models/machine';
   styleUrl: './admin.component.css',
 })
 export class AdminComponent {
-  constructor(private http: HttpClient, private adminService: AdminService) {}
+  constructor(private http: HttpClient, private adminService: AdminService, private userService: UserService) {}
 
   selectedFile: File | null = null;
-  machineName?: string;
-  PIN?: Number;
   fileinput: any;
+
+  machineName?: string;
   machines: Machine[] = [];
+
+  errorMessagePin?: string;
+  PIN?: string;
+  users: User[] = [];
+  selectedUser?: number;
 
   ngOnInit() {
     this.getMachines();
+    this.getusers();
   }
 
+  // ADD MAchine
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
   }
@@ -47,7 +56,6 @@ export class AdminComponent {
   getMachines() {
     this.adminService.getMachines().subscribe(
       (response: Machine[]) => {
-        console.log('here');
         this.machines = response;
       },
       (error: any) => {
@@ -65,6 +73,46 @@ export class AdminComponent {
       undefined,
       (error: any) => {
         console.error('Error fetching machines', error);
+      }
+    );
+  }
+
+  // Reset PIN
+
+  getusers()
+  {
+    this.userService.getUsers().subscribe(
+      (response: User[]) => {
+        this.users = response;
+      },
+      (error: any) => {
+        console.error('Error fetching users', error);
+      }
+    );
+  }
+
+  updatePin()
+  {
+    if(!this.PIN || !this.selectedUser)
+    {
+      this.errorMessagePin = "PIN and user must be set!";
+      return;
+    }
+
+    if(this.PIN.length != 4 || isNaN(Number(this.PIN)))
+    {
+      this.errorMessagePin = "PIN must be 4 digits!";
+      return;
+    }
+    this.errorMessagePin = undefined;
+
+
+    this.adminService.updatePin(this.selectedUser, this.PIN).subscribe(
+      (res => {
+        this.PIN = undefined;
+      }),
+      (error: any) => {
+        console.error('Error setting pin', error);
       }
     );
   }

@@ -27,8 +27,13 @@
         <div class="card bg-base-200 rounded-box">
           <div class="form-control p-1">
             <label class="label cursor-pointer gap-2">
-              <span class="label-text">{{machine.name}}</span>
-              <input type="checkbox" class="toggle" [checked]="machine.isActive" (change)="switchActivation(machine.id, $event)"/>
+              <span class="label-text">{{ machine.name }}</span>
+              <input
+                type="checkbox"
+                class="toggle"
+                [checked]="machine.isActive"
+                (change)="switchActivation(machine.id, $event)"
+              />
             </label>
           </div>
         </div>
@@ -39,27 +44,29 @@
 
       <div class="card bg-base-300 rounded-box flex place-items-center py-3 gap-2">
         <p>Reset User</p>
-        <input type="text" placeholder="New password" class="input input-bordered w-full max-w-xs" />
-        <div class="flex flex-wrap gap-1 justify-center">
-          <div class="card bg-base-200 rounded-box">
-            <div class="form-control p-1">
-              <label class="label cursor-pointer gap-2">
-                <span class="label-text">Laurin</span>
-                <input type="radio" name="radio-user" class="radio" />
-              </label>
-            </div>
+
+        @if(errorMessagePin)
+        {
+          <div class="label p-0">
+            <span class="label-text-alt text-error mb-1 ml-1">{{errorMessagePin}}</span>
           </div>
+        }
+        <input type="text" placeholder="New password" [(ngModel)]="PIN" class="input input-bordered w-full max-w-xs" />
+
+        <div class="flex flex-wrap gap-1 justify-center">
+          @for (user of users; track $index) {
 
           <div class="card bg-base-200 rounded-box">
             <div class="form-control p-1">
               <label class="label cursor-pointer gap-2">
-                <span class="label-text">Gast</span>
-                <input type="radio" name="radio-user" class="radio" />
+                <span class="label-text">{{ user.name }}</span>
+                <input type="radio" name="radio-user" class="radio" value="{{user.id}}" [(ngModel)]="selectedUser"/>
               </label>
             </div>
           </div>
+          }
         </div>
-        <button class="btn btn-outline text-red-500">Set PW</button>
+        <button (click)="updatePin()" class="btn btn-outline text-red-500">Set PW</button>
       </div>
     </div>
   </div>
