@@ -17,13 +17,15 @@ export class MachinesComponent {
   Machines?: Machine[];
 
   ngOnInit() {
-    this.machineService.getMachines().subscribe((result) => {
-      this.Machines = result;
-    }, console.log);
+    this.machineService.getMachines().subscribe({
+      next: (result) => {
+        this.Machines = result;
+      },
+      error: console.log,
+    });
   }
 
-  machineURL(id: number)
-  {
+  machineURL(id: number) {
     return URLService.BackendURL + `/machines/Machine${id}.jpg`;
   }
 

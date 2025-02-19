@@ -26,17 +26,17 @@ export class LoginComponent {
   }
 
   login(): void {
-    this.authService.login(this.selectedUser!, this.pin).subscribe(
-      (response) => {
+    this.authService.login(this.selectedUser!, this.pin).subscribe({
+      next: (response) => {
         this.loginFailed = false;
         // Store token and set current user data based on decoded token
-        this.router.navigate(["/machines"]);
+        this.router.navigate(['/machines']);
       },
-      (error) => {
+      error: (error) => {
         this.loginFailed = true;
         this.pin = '';
       },
-    );
+    });
   }
 
   click(number: number) {

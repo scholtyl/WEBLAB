@@ -20,9 +20,8 @@ export class MachineDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private machineService: MachineService,
     private trainingService: TrainingService,
-    private router : Router
+    private router: Router
   ) {
-
     // Create dummy machine to load html before ngOnInit
     this.machine = {
       id: Number(this.route.snapshot.paramMap.get('id')),
@@ -39,41 +38,47 @@ export class MachineDetailComponent implements OnInit {
   editTraining?: Training = new Training();
 
   ngOnInit() {
-    this.machineService
-      .getTrainingsForMachine(Number(this.route.snapshot.paramMap.get('id')))
-      .subscribe(({ machine, trainings }) => {
+    this.machineService.getTrainingsForMachine(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
+      next: ({ machine, trainings }) => {
         this.machine = machine;
         this.trainings = trainings.reverse();
         this.initTraining();
-      }, console.log);
+      },
+      error: console.log,
+    });
   }
 
   submit() {
     if (this.editing) {
       // Submit for EDIT
-      this.trainingService.editTraining(this.editTraining!).subscribe((result) => {
-        this.editing = false;
+      this.trainingService.editTraining(this.editTraining!).subscribe({
+        next: (result) => {
+          this.editing = false;
+        },
       });
     } else {
       // Submit for ADD
       console.log(this.editTraining);
-      this.trainingService.addTraining(this.editTraining!).subscribe((result) => {
-        this.trainings = result.reverse();
-        this.router.navigate(["/machines"]);
-      }, console.log);
+      this.trainingService.addTraining(this.editTraining!).subscribe({
+        next: (result) => {
+          this.trainings = result.reverse();
+          this.router.navigate(['/machines']);
+        },
+        error: console.log,
+      });
     }
   }
 
   del() {
-    this.trainingService.deleteTraining(this.editTraining!.id!).subscribe(
-      (result) => {
+    this.trainingService.deleteTraining(this.editTraining!.id!).subscribe({
+      next: () => {
         this.trainings = this.trainings!.filter((training) => training.id !== this.editTraining!.id);
         this.editing = false;
       },
-      (error) => {
+      error: (error) => {
         console.log(error.error);
-      }
-    );
+      },
+    });
   }
 
   cancel() {
@@ -105,8 +110,7 @@ export class MachineDetailComponent implements OnInit {
     }
   }
 
-  machineURL(id: number)
-  {
+  machineURL(id: number) {
     return URLService.BackendURL + `/machines/Machine${id}.jpg`;
   }
 }
