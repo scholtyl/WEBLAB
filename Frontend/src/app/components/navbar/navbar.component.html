@@ -7,6 +7,7 @@
   <div class="navbar-center hidden sm:flex z-50">
     <ul class="menu menu-horizontal px-1">
       <li><a routerLink="/machines">Machines</a></li>
+      <li><a routerLink="/statistics">Statistics</a></li>
       @if(isAdmin()){
       <li><a routerLink="/admin">Admin</a></li>
       }
@@ -21,6 +22,7 @@
       </div>
       <ul tabindex="0" class="menu menu-sm gap-3 dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
         <li><a routerLink="/machines">Machines</a></li>
+        <li><a routerLink="/statistics">Statistics</a></li>
         @if(isAdmin()){
         <li><a routerLink="/admin">Admin</a></li>
         }

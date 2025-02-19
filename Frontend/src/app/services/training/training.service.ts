@@ -11,7 +11,7 @@ import { URLService } from '../url/url.service';
 export class TrainingService {
   constructor(private http: HttpClient) {}
 
-  private apiBaseUrl = URLService.BackendURL + 'api/training';
+  private apiBaseUrl = URLService.BackendURL + '/api/training';
 
   deleteTraining(trainingId: string): Observable<any> {
     const url = `${this.apiBaseUrl}/${trainingId}`;

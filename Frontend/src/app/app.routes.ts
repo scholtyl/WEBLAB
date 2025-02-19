@@ -6,6 +6,7 @@ import { authGuard } from './routeGuards/auth/auth.guard';
 import { antiAuthGuard } from './routeGuards/antiauth/anti-auth.guard';
 import { AdminComponent } from './components/admin/admin.component';
 import { adminGuard } from './routeGuards/admin/admin.guard';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,12 @@ export const routes: Routes = [
     title: 'GymTracker',
     component: AdminComponent,
     canActivate: [adminGuard]
+  },
+  {
+    path: 'statistics',
+    title: 'GymTracker',
+    component: StatisticsComponent,
+    canActivate: [authGuard]
   },
   {
     path: '**',

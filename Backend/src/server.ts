@@ -6,6 +6,7 @@ import { authMiddleware } from "./middlewares/jwtMiddleware";
 import cors from 'cors';
 import trainingController from "./controllers/trainingController";
 import adminController from "./controllers/adminController";
+import statisticsController from "./controllers/statisticsController";
 import { adminMiddleware } from "./middlewares/adminMiddleware";
 
 dotenv.config(); // Load environment variables
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/api/user", userController);
 app.use("/api/machine",authMiddleware, machineController);
 app.use("/api/training",authMiddleware, trainingController);
+app.use("/api/statistics",authMiddleware, statisticsController);
 app.use("/api/admin", authMiddleware, adminMiddleware, adminController);
 
 app.use(express.static("public"));

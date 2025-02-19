@@ -66,7 +66,7 @@ export class DbSeeder {
     const trainingId = "1";
     const userId = "f47ac10b-58cc-4372-a567-0e02b2c3d479";
     const machineId = "1";
-    const trainingDate = new Date(2024,1,13).toISOString();
+    const trainingDate = new Date(2025,0,13).toISOString(); // 13.01.2025
 
     const existingTraining = await db.get("SELECT id FROM trainings WHERE id = ?", [trainingId]);
     if (!existingTraining) {
