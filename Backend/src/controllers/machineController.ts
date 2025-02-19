@@ -46,7 +46,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   console.log(`[Info] Detail for machine ${req.params.id} requested.`);
 
   const db = await getDB();
-  const trainingsRaw = await db.all("SELECT * FROM trainings WHERE user_id = (?) AND machine_id = (?)", [
+  const trainingsRaw = await db.all("SELECT * FROM trainings WHERE user_id = (?) AND machine_id = (?) ORDER BY date", [
     res.locals.user.id,
     req.params.id,
   ]);

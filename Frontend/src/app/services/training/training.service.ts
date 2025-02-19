@@ -22,7 +22,7 @@ export class TrainingService {
     const trainingDTO: TrainingDTO = {
       id: training.id,
       machine_id: training.machineId,
-      date: training.date!.toISOString().split("T")[0],
+      date: training.date!.toISOString(),
       weight1: training.weight1,
       weight2: training.weight2,
       weight3: training.weight3,
@@ -45,6 +45,7 @@ export class TrainingService {
       reps3: training.rep3,
     };
 
+    // result not needed as of now but maybe in future.
     return this.http
       .post<TrainingDTO[]>(this.apiBaseUrl, trainingDTO)
       .pipe(map((response) => response.map((dto) => Training.fromDTO(dto))));

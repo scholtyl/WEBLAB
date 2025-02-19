@@ -52,16 +52,15 @@ export class MachineDetailComponent implements OnInit {
     if (this.editing) {
       // Submit for EDIT
       this.trainingService.editTraining(this.editTraining!).subscribe({
-        next: (result) => {
+        next: () => {
           this.editing = false;
+          this.ngOnInit();
         },
       });
     } else {
       // Submit for ADD
-      console.log(this.editTraining);
       this.trainingService.addTraining(this.editTraining!).subscribe({
-        next: (result) => {
-          this.trainings = result.reverse();
+        next: () => {
           this.router.navigate(['/machines']);
         },
         error: console.log,
@@ -88,7 +87,7 @@ export class MachineDetailComponent implements OnInit {
 
   edit(id: string) {
     this.editing = true;
-    this.editTraining = this.trainings!.find((t) => t.id == id);
+    this.editTraining = { ...this.trainings!.find((t) => t.id == id) } as Training;
   }
 
   initTraining() {
