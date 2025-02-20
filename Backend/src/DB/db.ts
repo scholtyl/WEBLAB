@@ -4,11 +4,16 @@ import { DbSeeder } from "./dbSeeder";
 
 let db: Database | null = null;
 
+const isTestEnv = process.env.NODE_ENV === "test";
+const DB_FILE = isTestEnv ? "./test_database.sqlite" : "./database.sqlite";
+
 // Function to initialize and return a single DB instance
 async function getDB(): Promise<Database> {
+
+  console.log(isTestEnv);
   if (!db) {
     db = await open({
-      filename: "./database.sqlite",
+      filename: DB_FILE,
       driver: sqlite3.Database,
     });
 

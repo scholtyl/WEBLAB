@@ -1,4 +1,5 @@
 Backend/database.sqlite
+Backend/test_database.sqlite
 Backend/public/machines/*
 !Backend/public/machines/Machine1.jpg
 !Backend/public/machines/Machine2.jpg
