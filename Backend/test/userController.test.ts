@@ -22,21 +22,21 @@ describe("User Controller Tests", () => {
   it("Login with /api/user/login", async () => {
     const res = await request(app).post("/api/user/login").send({ username: "Laurin", pin: "5600" });
 
-    expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("token");
+    expect(res.status).toBe(200);
   });
 
   it("should return 401 for invalid credentials", async () => {
     const res = await request(app).post("/api/user/login").send({ username: "Laurin", pin: "wrongpassword" });
 
-    expect(res.status).toBe(401);
     expect(res.body).toEqual({ error: "Invalid credentials" });
+    expect(res.status).toBe(401);
   });
 
   it("should return 400 if username or pin is missing", async () => {
     const res = await request(app).post("/api/user/login").send({ username: "testuser" });
 
+    expect(res.body).toEqual({ error: "Username and PIN are required" });
     expect(res.status).toBe(400);
-    expect(res.body).toEqual({ error: "Username and password are required" });
   });
 });

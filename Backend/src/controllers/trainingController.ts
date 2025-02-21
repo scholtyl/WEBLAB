@@ -7,6 +7,10 @@ import { TrainingDTO } from "../DTOs/trainingDTO";
 const router = Router();
 
 router.delete("/:id", async (req: Request, res: Response) => {
+  if (!req.params.id) {
+    res.status(400).json({ message: "Training ID is required." });
+    return;
+  }
   console.log(`[Info] Deletion of training ${req.params.id} requested.`);
 
   const db = await getDB();
@@ -27,11 +31,21 @@ router.delete("/:id", async (req: Request, res: Response) => {
 
 router.put("", async (req: Request, res: Response) => {
   const training = req.body as TrainingDTO;
-  console.log(`[Info] Updating training ${training.id}.`);
-
-  if (!training.id) {
-    res.status(400).json({ message: "Training ID is required." });
+  if (
+    !training.id ||
+    !training.machine_id ||
+    !training.date ||
+    !training.reps1 == undefined ||
+    !training.weight1 == undefined ||
+    !training.reps2 == undefined ||
+    !training.weight2 == undefined ||
+    !training.reps3 == undefined ||
+    !training.weight3 == undefined
+  ) {
+    res.status(400).json({ message: "Not all required fields present." });
+    return;
   }
+  console.log(`[Info] Updating training ${training.id} rquested`);
 
   const db = await getDB();
   const trainingRaw = await db.get("SELECT * FROM trainings WHERE id = ?", training.id);
@@ -68,10 +82,22 @@ router.put("", async (req: Request, res: Response) => {
 });
 
 router.post("", async (req: Request, res: Response) => {
+  const training = req.body as TrainingDTO;
+  if (
+    !training.machine_id ||
+    !training.reps1 == undefined ||
+    !training.weight1 == undefined ||
+    !training.reps2 == undefined ||
+    !training.weight2 == undefined ||
+    !training.reps3 == undefined ||
+    !training.weight3 == undefined
+  ) {
+    res.status(400).json({ message: "Not all required fields present." });
+    return;
+  }
   console.log(`[Info] New training registered.`);
 
   const userId = res.locals.user.id;
-  const training = req.body as TrainingDTO;
 
   const date = new Date().toISOString();
   const trainingId = uuidv4();

@@ -30,7 +30,7 @@ app.use("/api/admin", authMiddleware, adminMiddleware, adminController);
 app.use(express.static("public"));
 
 app.get("**", (req: Request, res: Response) => {
-    res.status(404).send("Sorry, no endpoint here!");
+    res.status(404).json({error: "Sorry, no endpoint here!"});
 });
 
 export default app;

@@ -24,12 +24,12 @@ router.get("/users", async (req: Request, res: Response) => {
     ) t ON u.id = t.user_id;
 `;
 
-const usersRaw = await db.all(query);
+  const usersRaw = await db.all(query);
 
   const users: UserDTO[] = usersRaw.map((user: any) => ({
     id: user.id,
     name: user.name,
-    lastTraining: user.latest_training_date ?? null, // Ensure null safety
+    lastTraining: user.latest_training_date ?? null,
   }));
 
   res.json(users);
@@ -37,13 +37,11 @@ const usersRaw = await db.all(query);
 
 router.post("/login", async (req: Request, res: Response) => {
   const { username, pin } = req.body;
-  console.log(`[Info] User ${username} requesting login.`);
-
   if (!username || !pin) {
-    console.log(`[Sus] Username and password are required body: `, req.body);
-    res.status(400).json({ error: "Username and password are required" });
+    res.status(400).json({ error: "Username and PIN are required" });
     return;
   }
+  console.log(`[Info] User ${username} requesting login.`);
 
   const db = await getDB();
   const user = await db.get("SELECT * FROM users WHERE name = (?)", [username]);
@@ -66,7 +64,7 @@ router.post("/login", async (req: Request, res: Response) => {
   });
 
   console.log(`[Info] User "${username}" logged in admin:${user.is_admin}.`);
-  res.json({token: token});
+  res.json({ token: token });
 });
 
 export default router;

@@ -3,7 +3,6 @@ import { Router } from "express";
 import { MachineDTO } from "../DTOs/machineDTO";
 import getDB from "../DB/db";
 import { TrainingDTO } from "../DTOs/trainingDTO";
-import { Console } from "console";
 
 const router = Router();
 
@@ -43,9 +42,21 @@ router.get("/machines", async (req: Request, res: Response) => {
 });
 
 router.get("/:id", async (req: Request, res: Response) => {
+  if (!req.params.id) {
+    res.status(400).json({ message: "Machine ID is required." });
+    return;
+  }
   console.log(`[Info] Detail for machine ${req.params.id} requested.`);
 
   const db = await getDB();
+  const machineRaw = await db.get("SELECT * FROM machines WHERE id = (?)", [req.params.id]);
+
+  if(!machineRaw)
+  {
+    res.status(404).json({ message: "Machine not found." });
+    return;
+  }
+  
   const trainingsRaw = await db.all("SELECT * FROM trainings WHERE user_id = (?) AND machine_id = (?) ORDER BY date", [
     res.locals.user.id,
     req.params.id,
@@ -63,7 +74,6 @@ router.get("/:id", async (req: Request, res: Response) => {
   }));
 
   const latestTraining = [...trainings].reverse()[0];
-  const machineRaw = await db.get("SELECT * FROM machines WHERE id = (?)", [req.params.id]);
   const machine: MachineDTO = {
     id: machineRaw.id,
     name: machineRaw.name,

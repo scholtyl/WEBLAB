@@ -19,7 +19,15 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req: Request, file: Express.Multer.File, cb: Function) => {
+  const allowedTypes = ["image/jpeg", "image/png"];
+  if (!allowedTypes.includes(file.mimetype)) {
+    return cb(new Error("Invalid file type. Only JPG and PNG are allowed."), false);
+  }
+  cb(null, true);
+};
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 router.post("/upload", upload.single("image"), async (req: Request, res: Response) => {
   if (!req.file) {
@@ -37,11 +45,7 @@ router.post("/upload", upload.single("image"), async (req: Request, res: Respons
   const resId = await db.get(`SELECT MAX(id) AS max_id FROM machines`);
   const newId: number = resId?.max_id ? Number(resId.max_id) + 1 : 1;
 
-  console.log(newId);
-  await db.run(
-    `INSERT INTO machines (id, name, is_active) VALUES (?, ?, ?)`,
-    [newId, machineName, 1]
-  );
+  await db.run(`INSERT INTO machines (id, name, is_active) VALUES (?, ?, ?)`, [newId, machineName, 1]);
 
   console.log(`[ADMIN] Machine '${machineName}' added with ID: ${newId}.`);
   res.status(200).json(`[INFO] Machine '${machineName}' added with ID: ${newId}.`);
@@ -65,8 +69,13 @@ router.get("/machines", async (req: Request, res: Response) => {
 });
 
 router.put("/switch", async (req: Request, res: Response) => {
-  console.log(`[ADMIN] Switching activation status of machine .`);
-  const { toActivated, machineId } = req.body;
+  const { toActivated , machineId } = req.body;
+
+  if (toActivated == undefined || machineId == undefined) {
+    res.status(400).json({ message: "machineId and toActivated is required." });
+    return;
+  }
+  console.log(`[ADMIN] Switching activation status of machine rquested.`);
 
   const db = await getDB();
   const query = `UPDATE machines SET is_active = (?) WHERE id = (?);`;
