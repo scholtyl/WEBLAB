@@ -5,7 +5,8 @@ Der «GymTracker» ist eine Applikation, welche einem hilft den Überblick beim 
 Auf der Webseite kann man verschiedene Maschinen erfassen. Für jede Maschine kann man ein Training hinzufügen mit Kilos, Repetitionen für 3 Sets. Die Trainings kann man auch wieder 
 Löschen oder Editieren.
 
-Der Auftrag kann hier nachgelesen werden: [User Stories](Auftrag.md)
+Der selbst definierten Userstories können hier nachgelesen werden: [User Stories](Auftrag.md)  
+Der Modul-Auftrag kann hier nachgelesen werden: [Auftrag Modul](https://github.com/web-programming-lab/web-programming-lab-projekt)
 
 > Note: Diese Applikation ist nur für Mobile optimiert, daher ist im Browser auf dem PC der Developper-Mode zu empfehlen.
 
