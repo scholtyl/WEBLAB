@@ -142,5 +142,5 @@ Das Arbeitsjournal wurde fortlaufend geführt und korelliert mit den [commits](h
 |11	| 21.02.2025|	3	|Tests                                                                                  |
 |12	| 23.02.2025|	5	|Abschlussarbeiten & Doku                                                               |
 |13	| 24.02.2025|	3	|Doku & Diagramme                                                                       |
-|14	| ?     	|   2	|(Presentation preparation                                                              |
+|14	| ?     	|   2	|(Presentation preparation)                                                             |
 |   | **Total** | **52**|                                                                                       |
