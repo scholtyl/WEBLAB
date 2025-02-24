@@ -7,6 +7,8 @@ Löschen oder Editieren.
 
 Der Auftrag kann hier nachgelesen werden: [User Stories](Auftrag.md)
 
+> Note: Diese Applikation ist nur für Mobile optimiert, daher ist im Browser auf dem PC der Developper-Mode zu empfehlen.
+
 ## Development server
 
 Um das Backend zu starten, gehen sie zum [/Backend](./Backend/) folder und führen sie diese Befehle aus:
@@ -56,6 +58,8 @@ Für das Frontend wurde Angular 19 mit Standalone-Components gewählt. Diese Ent
 ### UI
 Für das UI wurde das DaisyUI Framework gewählt. Dieses Framework ist basierend auf Talwind und stellt all seine Funktionen zur Verfügung, sowie zusätzlich auch noch fertige eigene Komponenten. Diese beiden Frameworks ermöglichen ein sehr schnelles entwickeln und sorgen dafür, dass alle Komponenten stimmig miteinander zusammenpassen. Ausserdem ermöglichen sie Themes, was die Farbselektion vereinfacht.
 Für die Icons wurden die Boxicon Icons verwendet da es eine grosse Auswahl an gratis Icons beinhaltet.
+
+Da die Webseite später ausschliesslich auf dem Smartphone genutzt wird, wurde das Design nur auf Mobile optimeirt. Auf dem PC funktioniert alles und es gibt keine UI-Bugs, jedoch sind gewisse Pages nicht besonders stimmig auf einem grossen Bildschirm.  
 
 ### Backend
 Für das Backend wurde ein Node.js Express Server verwendet, dies auch wieder, weil es teil des Unterrichtstoffes war aber auch da es ein sehr schnelles und einfaches Entwickeln in JS ermöglicht. Das Backend wurde ausserdem in TypeScript geschrieben, damit der Code im Front- und Backend möglichst ähnlich geschrieben werden kann.
