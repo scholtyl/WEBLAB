@@ -102,7 +102,7 @@ Navbar wird immer angezeit, hat aber selbst eine Abhängikeit zum Auth Service, 
 ### Backend Endpoints
 Here sieht man alle Endpoints mit ihrer route, sammt requirements ihrer middleware. Die Endpoints erben die requirements ihrers haupt Knotens.
 
-<img src="./DokuBilder/EndPoints.png" alt="EndPoints" style="display:block; margin:auto; width:75%;"> 
+<img src="./DokuBilder/Endpoints.png" alt="Endpoints" style="display:block; margin:auto; width:75%;"> 
 
 ## Gross-Übersicht
 <img src="./DokuBilder/BigPickture.png" alt="BigPickture"> 
